@@ -1,0 +1,31 @@
+# Utilisez l'image officielle Elixir 1.17.3 basée sur Erlang/OTP 27
+FROM elixir:1.17.3 
+
+# Installez les dépendances système nécessaires, y compris les outils client PostgreSQL
+RUN apt-get update && apt-get install -y inotify-tools postgresql-client
+
+# Définissez le répertoire de travail dans le conteneur
+WORKDIR /app
+
+# Installez les dépendances Hex et Rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# Copiez les fichiers de configuration du projet
+COPY mix.exs mix.lock ./
+
+# Installez les dépendances du projet
+RUN mix deps.get
+
+# Installez esbuild
+RUN mix esbuild.install
+
+# Copiez le script entrypoint.sh dans le répertoire /usr/local/bin et donnez-lui les droits d'exécution
+COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+# Exposez le port sur lequel l'application s'exécutera
+EXPOSE 4000
+
+# Utilisez entrypoint.sh pour démarrer le conteneur
+CMD ["./entrypoint.sh"]

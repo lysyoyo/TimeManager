@@ -1,0 +1,89 @@
+# Étape 1: Base Node.js
+FROM node:18-slim AS node-base
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install -g @capacitor/cli nodemon && \
+    npm ci
+
+# Étape 2: Build de l'application
+FROM node-base AS builder
+COPY . .
+RUN npm run build
+
+# Étape 3: Configuration Android
+FROM ubuntu:22.04 AS android-builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Variables d'environnement
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV ANDROID_HOME=/opt/android-sdk
+ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:/app/node_modules/.bin
+ENV GRADLE_USER_HOME=/cache
+ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true"
+
+# Installation de Node.js et des dépendances Android
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jdk \
+    wget \
+    unzip \
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g @capacitor/cli nodemon \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installation SDK Android
+RUN mkdir -p ${ANDROID_SDK_ROOT} && \
+    cd ${ANDROID_SDK_ROOT} && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
+    unzip commandlinetools-linux-*_latest.zip && \
+    rm commandlinetools-linux-*_latest.zip && \
+    mkdir -p cmdline-tools/latest && \
+    mv cmdline-tools/bin cmdline-tools/latest/ && \
+    mv cmdline-tools/lib cmdline-tools/latest/ && \
+    yes | sdkmanager --licenses && \
+    sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
+
+# Création du keystore de debug
+RUN keytool -genkey -v \
+    -keystore debug.keystore \
+    -storepass android \
+    -alias androiddebugkey \
+    -keypass android \
+    -keyalg RSA \
+    -keysize 2048 \
+    -validity 10000 \
+    -dname "CN=Android Debug,O=Android,C=US"
+
+# Copier les fichiers depuis les étapes précédentes
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+COPY --from=node-base /app/node_modules ./node_modules
+
+# Configuration Nodemon pour le watch
+COPY nodemon.json ./
+
+# Configuration Capacitor et Android
+RUN npx cap init BatApplication com.GothamSoftware.BatApplication --web-dir=dist && \
+    npm install @capacitor/android && \
+    npx cap add android
+
+# Configuration du keystore dans gradle.properties
+RUN mkdir -p android/app && \
+    echo "RELEASE_STORE_FILE=/debug.keystore" >> android/app/gradle.properties && \
+    echo "RELEASE_STORE_PASSWORD=android" >> android/app/gradle.properties && \
+    echo "RELEASE_KEY_ALIAS=androiddebugkey" >> android/app/gradle.properties && \
+    echo "RELEASE_KEY_PASSWORD=android" >> android/app/gradle.properties
+
+# Copie du keystore dans le projet
+RUN cp /debug.keystore android/app/debug.keystore
+
+# Script de démarrage pour supporter le mode normal et le mode watch
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Commande finale qui peut être surchargée par docker-compose
+CMD ["/start.sh"]

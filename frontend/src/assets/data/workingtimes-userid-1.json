@@ -1,0 +1,7 @@
+[
+    { "date": "22-10-2024", "startTime": "8:00:00", "endTime": "18:00:00", "duration": "10 hours" },
+    { "date": "23-10-2024", "startTime": "9:00:00", "endTime": "17:00:00", "duration": "8 hours" },
+    { "date": "24-10-2024", "startTime": "8:30:00", "endTime": "17:30:00", "duration": "9 hours" },
+    { "date": "25-10-2024", "startTime": "7:00:00", "endTime": "16:00:00", "duration": "9 hours" },
+    { "date": "26-10-2024", "startTime": "10:00:00", "endTime": "19:00:00", "duration": "9 hours" }
+]

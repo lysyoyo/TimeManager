@@ -1,0 +1,102 @@
+[
+    {
+      "id": 1,
+      "username": "John Doe",
+      "status": "Active",
+      "type": "Admin",
+      "email": "22/10/2024 14:50:45",
+      "signedUp": "2023-01-15",
+      "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+      "role": "user"
+    },
+    {
+      "id": 2,
+      "username": "Jane Smith",
+      "status": "Inactive",
+      "type": "User",
+      "email": "21/10/2024 18:00:00",
+      "signedUp": "2022-05-22",
+      "avatar": "https://randomuser.me/api/portraits/men/2.jpg",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "username": "Sam Wilson",
+      "status": "Active",
+      "type": "User",
+      "email": "22/10/2024 14:50:45",
+      "signedUp": "2023-03-10",
+      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+      "role": "admin"
+    },
+    {
+      "id": 4,
+      "username": "Chris Evans",
+      "status": "Active",
+      "type": "User",
+      "email": "19/10/2024 18:30:00",
+      "signedUp": "2023-08-01",
+      "avatar": "https://randomuser.me/api/portraits/men/4.jpg",
+      "role": "user"
+    },
+    {
+      "id": 5,
+      "username": "Natalie Portman",
+      "status": "Active",
+      "type": "Admin",
+      "email": "19/10/2024 18:30:00",
+      "signedUp": "2022-11-05",
+      "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
+      "role": "user"
+    },
+    {
+      "id": 6,
+      "username": "Tom Hanks",
+      "status": "Inactive",
+      "type": "User",
+      "email": "22/10/2024 12:00:00",
+      "signedUp": "2022-09-17",
+      "avatar": "https://randomuser.me/api/portraits/men/6.jpg",
+      "role": "user"
+    },
+    {
+      "id": 7,
+      "username": "Scarlett Johansson",
+      "status": "Active",
+      "type": "User",
+      "email": "13/09/2024 22:20:00",
+      "signedUp": "2023-06-25",
+      "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
+      "role": "admin"
+    },
+    {
+      "id": 8,
+      "username": "Robert Downey Jr.",
+      "status": "Inactive",
+      "type": "User",
+      "email": "13/09/2024 22:20:00",
+      "signedUp": "2023-02-12",
+      "avatar": "https://randomuser.me/api/portraits/men/8.jpg",
+      "role": "user"
+    },
+    {
+      "id": 9,
+      "username": "Robert Downey Jr. 2",
+      "status": "Inactive",
+      "type": "User",
+      "email": "13/09/2024 22:20:00",
+      "signedUp": "2023-02-12",
+      "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
+      "role": "user"
+    },
+    {
+      "id": 10,
+      "username": "Robert Downey Jr. 3",
+      "status": "Inactive",
+      "type": "User",
+      "email": "13/09/2024 22:20:00",
+      "signedUp": "2023-02-12",
+      "avatar": "https://randomuser.me/api/portraits/men/10.jpg",
+      "role": "user"
+    }
+  ]

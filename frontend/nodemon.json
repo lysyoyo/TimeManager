@@ -1,0 +1,6 @@
+{
+  "watch": ["src/"],
+  "ignore": ["android/", "node_modules/"],
+  "ext": "js,vue,ts,tsx,css,scss",
+  "exec": "npm run build:android"
+}

@@ -1,0 +1,108 @@
+/* Styles pour le layout utilisateur */
+.admin-layout {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Barre latérale */
+  .sidebar-container {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .sidebar-header {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .site-logo {
+    width: 200px; /* Largeur agrandie pour le logo */
+    height: auto; /* Maintien les proportions de l'image */
+    margin-top: -20%;
+    margin-bottom: -55px; /* Espacement entre le logo et le texte */
+  }
+  
+  .site-name {
+    font-size: 1.5rem; /* Taille du texte */
+    font-weight: bold;
+    color: #333; /* Couleur sombre pour le texte */
+  }
+  
+  .menu-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .menu-item .icon {
+    margin-right: 20px;
+    color: gray;
+    font-size: 18px;
+    width: 25px;
+    text-align: center;
+  }
+  
+  .menu-item .menu-text {
+    color: gray;
+    text-align: left;
+    flex-grow: 1;
+  }
+  
+  .menu-item.active {
+    background-color: #8fb67d;
+    color: white;
+  }
+  
+  .menu-item.active .icon {
+    color: white;
+  }
+  
+  .menu-item.active .menu-text {
+    color: white;
+  }
+  
+  .menu-item:hover {
+    background-color: #b4b4b4;
+    color: white;
+  }
+  
+  .menu-item:hover .icon {
+    color: white;
+  }
+  
+  .menu-item:hover .menu-text {
+    color: white;
+  }
+  
+  .divider {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin: 15px 0;
+  }
+  
+  /* Contenu principal */
+  .main-content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+  }
+  
+  .content {
+    padding: 20px;
+    background-color: #fff;
+  }
+  

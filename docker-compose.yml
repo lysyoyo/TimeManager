@@ -1,0 +1,67 @@
+services:
+  db:
+    image: postgres:14
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: ./batman
+    env_file: .env
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "ecto://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}"
+      SECRET_KEY_BASE: "${SECRET_KEY_BASE}"
+      PHX_HOST: "${PHX_HOST}"
+      MIX_ENV: "${MIX_ENV}"
+    volumes:
+      - ./batman:/app
+    command: sh -c "mix deps.get && mix compile && mix phx.server"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run serve
+
+  android-builder:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.android
+    volumes:
+      - ./frontend:/app  # Montage du code source complet
+      - ./frontend/android/app/build/outputs/apk:/app/android/app/build/outputs/apk
+      - gradle-cache:/cache
+      - android-cache:/root/.android
+      - /app/node_modules  # Éviter d'écraser les node_modules du container
+    environment:
+      - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+      - ANDROID_SDK_ROOT=/opt/android-sdk
+      - ANDROID_HOME=/opt/android-sdk
+      - NODE_ENV=development
+    command: sh -c "npm install && npm run watch & npm run dev:android"
+    depends_on:
+      - frontend
+    tty: true
+
+volumes:
+  postgres_data:
+  gradle-cache:
+  android-cache:

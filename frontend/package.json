@@ -1,0 +1,62 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --mode production",
+    "start": "vue-cli-service serve",
+    "test": "cypress run",
+    "watch": "vue-cli-service build --watch",
+    "build:android": "vue-cli-service build && npx cap sync && cd android && ./gradlew assembleDebug",
+    "dev:android": "nodemon --watch dist --exec 'npx cap sync && cd android && ./gradlew assembleDebug'"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/geolocation": "^6.0.1",
+    "@capacitor/ios": "^6.1.2",
+    "axios": "^1.7.7",
+    "chart.js": "^4.4.5",
+    "core-js": "^3.8.3",
+    "element-plus": "^2.8.6",
+    "frontend": "file:",
+    "swrv": "^1.0.4",
+    "vue": "^3.2.13",
+    "vue-chartjs": "^5.3.1",
+    "vue-router": "^4.4.5",
+    "vuetify": "^3.7.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.8",
+    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.25.8",
+    "@cypress/code-coverage": "^3.13.4",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "cypress": "^13.15.0",
+    "nodemon": "^3.1.7"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
